@@ -7,13 +7,13 @@ import RepositoryList from './repository-list'
 import RepositoryName from './repository-name'
 
 const Home = () => {
-  const { username, repositoryname } = useParams()
+  const { username, repositoryname } = useParams('')
   const [repo, setRepo] = useState([])
 
   useEffect(() => {
-    if (typeof username !== 'undefined') {
-      axios.get(`https://api.github.com/users/${username}/repos`).then((it) => {
-        const namesArray = it.data.map((elem) => elem.name)
+    if (username) {
+      axios(`https://api.github.com/users/${username}/repos`).then((it) => {
+        const namesArray = it.data
         setRepo(namesArray)
       })
     }
@@ -22,14 +22,12 @@ const Home = () => {
   const [text, setText] = useState('')
 
   useEffect(() => {
-    if (typeof username !== 'undefined' && typeof repositoryname !== 'undefined') {
+    if (username && repositoryname) {
       const headers = { Accept: 'application/vnd.github.VERSION.raw' }
-      axios
-        .get(`https://api.github.com/repos/${username}/${repositoryname}/readme`, {
-          param: {},
-          headers
-        })
-        .then((it) => setText(it.data))
+      axios(`https://api.github.com/repos/${username}/${repositoryname}/readme`, {
+        param: {},
+        headers
+      }).then(({ data }) => setText(data))
     }
     return () => {}
   }, [username, repositoryname])
@@ -43,7 +41,7 @@ const Home = () => {
           <Route
             exact
             path="/:username"
-            component={() => <RepositoryList repo={repo} username={username} />}
+            component={() => <RepositoryList repo={repo} setRepo={setRepo} username={username} />}
           />
           <Route
             exact

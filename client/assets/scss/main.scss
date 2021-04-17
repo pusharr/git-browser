@@ -4,3 +4,7 @@
 /* purgecss end ignore */
 
 @tailwind utilities;
+
+input:-internal-autofill-selected {
+    background-color: black !important;
+}
