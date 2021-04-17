@@ -39,7 +39,7 @@ const RepositoryList = (props) => {
           onClick={() => history.push(`/${username}/${it.name}`)}
           aria-hidden="true"
         >
-          <div className="w-1/4  text-justify">
+          <div className="w-1/4">
             <img
               src={it.owner.avatar_url}
               alt="userpic"
