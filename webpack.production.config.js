@@ -128,12 +128,7 @@ const config = {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
-            loader: 'url-loader',
-            options: {
-              limit: 100,
-              mimetype: 'image/png',
-              name: 'images/[name].[ext]'
-            }
+            loader: 'file-loader'
           }
         ]
       },
